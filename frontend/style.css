@@ -1,0 +1,55 @@
+.topbar{
+    background-color: aquamarine;
+    width: 100%;
+    height: 100px;
+}
+
+.UIcontainer{
+
+    display: flex;
+    flex-direction: row;
+    background-color: green;
+    width: 100%;
+    height: 100%;
+}
+
+.contacts{
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 7;
+    max-height: 400px;
+}
+
+.contact{
+    background-color: brown;
+    height: 100px;
+}
+
+.chatcontainer{
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 7;
+    width: 70%;
+}
+
+.chatbox{
+    background-color: darkcyan;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+}
+
+.message{
+    background-color: cyan;
+    height: 20px;
+}
+
+.chatUI{
+    background-color: blueviolet;
+    align-self: flex-end;
+    width: 100%;
+    height: 50px;
+}
+

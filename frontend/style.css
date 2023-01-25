@@ -1,7 +1,12 @@
+body{
+    margin: 0;
+    height: 100vh;
+}
+
 .topbar{
     background-color: aquamarine;
     width: 100%;
-    height: 100px;
+
 }
 
 .UIcontainer{

@@ -1,18 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
         <title>Logowanie</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{% static 'auth.css' %}">
         <meta charset="UTF-8">
     </head>
     <body>
         <h1 class="page-title">Logowanie</h1>
         <div class="form-container">
-            <form>
+            <form method="POST">
+                {% csrf_token %}
                 <input type="text" placeholder="Login" id="login" name="login">
                 <input type="password" placeholder="Hasło" id="password" name="password">
                 <button type="submit" class="submit-button">Zaloguj</button>
             </form>
         </div>
+        {% if messages %}
+            <div class="login-message">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
     </body>
 </html>

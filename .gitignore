@@ -1,5 +1,7 @@
 # for database
 db/
+venv/
+.directory
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template

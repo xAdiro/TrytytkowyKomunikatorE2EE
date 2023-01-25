@@ -1,29 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rejestracja</title>
-        <link rel="stylesheet" href="{% static 'auth.css' %}">
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <h1 class="page-title">Rejestracja</h1>
-        <div class="form-container">
-            {% load crispy_forms_filters %}
-            <form method="POST">
-                {% csrf_token %}
-                {% load crispy_forms_tags %}
-                {{ form|crispy }}
-                <button type="submit" class="submit-button" >Log in</button>
-            </form>
+{% extends "base_form.html" %}
+{% block title %} Registration {% endblock %}
 
-            {% if messages %}
-                <div class="login-message">
-                    {% for message in messages %}
-                    {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-    </body>
-</html>
+{% block form_element %}
+    {% load crispy_forms_filters %}
+    <form method="POST">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {{ form|crispy }}
+        <button type="submit" class="submit-button" >Log in</button>
+    </form>
+{% endblock %}

@@ -19,13 +19,13 @@ def chat(request):
     # messages =
     # contacts =
 
-    contacts1 = [models.FriendsWith.objects.get(id=query_id["user2"])
+    contacts1 = [User.objects.get(id=query_id["user2"])
                        for query_id in
-                       models.FriendsWith.objects.filter(user1=user.id).values("user1")]
+                       models.FriendsWith.objects.filter(user1=user.id).values("user2")]
 
-    contacts2 = [models.FriendsWith.objects.get(id=query_id["user1"])
+    contacts2 = [User.objects.get(id=query_id["user1"])
                        for query_id in
-                       models.FriendsWith.objects.filter(user2=user.id).values("user2")]
+                       models.FriendsWith.objects.filter(user2=user.id).values("user1")]
 
     contacts1.extend(contacts2)
 

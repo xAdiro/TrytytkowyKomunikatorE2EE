@@ -1,4 +1,4 @@
-from django.db.models import Model, CharField, DateField, DateTimeField, TextField, ForeignKey, CASCADE
+from django.db.models import Model, CharField, DateField, DateTimeField, TextField, ForeignKey, CASCADE, SET_NULL
 from django.contrib.auth.models import User
 
 
@@ -7,11 +7,17 @@ class Key(Model):
     last_used = DateField(auto_now_add=True)
 
 
+class KeyUser(User):
+    current_key = ForeignKey(Key, on_delete=SET_NULL, null=True)
+
+
 class Message(Model):
-    author = ForeignKey(User, on_delete=CASCADE)
-    receiver_key = ForeignKey(Key, on_delete=CASCADE)
-    author_content = TextField()
-    receiver_content = TextField()
+    author = ForeignKey(User, on_delete=CASCADE, related_name="%(class)s_author")
+    receiver = ForeignKey(User, on_delete=CASCADE, related_name="%(class)s_receiver")
+
+    used_key = ForeignKey(Key, on_delete=CASCADE)
+
+    content = TextField()
     timestamp = DateTimeField(auto_now_add=True)
 
 

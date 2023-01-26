@@ -4,5 +4,13 @@ function generateRSAPair() {
 
     const array = new Uint32Array(1);
     let passPhrase = window.crypto.getRandomValues(array)[0] + Date.now();
-    var RSAKey = cryptico.generateRSAKey(passPhrase, )
+    var RSAKey = cryptico.generateRSAKey(passPhrase, bits);
+}
+
+function encryptForMe(text) {
+    return cryptico.encrypt(text, RSAKey)
+}
+
+function encryptForSomeone(text, RSAKeyString){
+    return cryptico.encrypt(text, RSAKeyString)
 }

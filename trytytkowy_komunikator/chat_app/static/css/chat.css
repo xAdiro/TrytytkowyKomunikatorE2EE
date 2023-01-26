@@ -19,12 +19,15 @@ body{
     height: 95vh;
 }
 
+.contacts-container{
+    flex-grow: 7;
+}
+
 .contacts{
     background-color: red;
 
     display: flex;
     flex-direction: column;
-    flex-grow: 7;
     gap: 0.3em;
 
     max-height: 400px;

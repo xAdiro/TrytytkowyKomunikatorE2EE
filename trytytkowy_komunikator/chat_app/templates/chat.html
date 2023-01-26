@@ -6,18 +6,26 @@
         <link rel="stylesheet" href="{% static 'css/chat.css' %}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="{% static 'js/send.js' %}"></script>
+        <script src="{% static 'js/addFriend.js' %}"></script>
     </head>
     <body>
         <div class="topbar">Bla</div>
         <div class="UIcontainer">
-            <div class="contacts">
-                <div class="contact"> Kontakt 1</div>
-                <div class="contact"> Kontakt 2</div>
-                <div class="contact"> Kontakt 3</div>
-                <div class="contact"> Kontakt 4</div>
-                <div class="contact"> Kontakt 5</div>
+            <div class="contacts-container">
+                <div class="add-contact">
+                    <span>Add Friend</span>
+                    <button id="add-contact-button">+</button>
+                    <br>
+                    <input id="add-contact-input" type="text" onkeydown="addFriend()">
+                </div>
+                <div class="contacts">
+                    <div class="contact"> Kontakt 1</div>
+                    <div class="contact"> Kontakt 2</div>
+                    <div class="contact"> Kontakt 3</div>
+                    <div class="contact"> Kontakt 4</div>
+                    <div class="contact"> Kontakt 5</div>
+                </div>
             </div>
-
             <div class = "chatcontainer">
                 <div class="chatbox">
                     <div class="message message-sent">Message 1</div>

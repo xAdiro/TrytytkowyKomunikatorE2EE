@@ -28,8 +28,10 @@
                     <input id="add-contact-input" type="text" onkeydown="sendFriendRequest()">
                 </div>
                 <div class="contacts">
-                    {% for request in contacts %}
-                    <div class="contact">{{ request }}</div>
+                    {% for contact in contacts %}
+                    <a href="/converser={{ contact }}">    
+                    <div class="contact {% if converser = {{ contact }}%}active_contact{% endif %}">{{ contact }}</div>
+                    </a>
                     {% endfor %}
                 </div>
                 <div class="friend-request-container">
@@ -55,11 +57,6 @@
                     {% endfor %}
 
 
-                    {% comment %} <div class="message message-sent">Message 1</div>
-                    <div class="message message-received">Message 2</div>
-                    <div class="message message-received">Message 3</div>
-                    <div class="message message-sent">Message 4</div>
-                    <div class="message message-sent">Message 5</div> {% endcomment %}
                 </div>
                 <div class="chatUI">
                     <input id="message-field" type="text" maxlength="255">

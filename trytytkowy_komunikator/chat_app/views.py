@@ -11,6 +11,9 @@ def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
+
+    
+
     #friend requests-------------------------
 
     user = User.objects.get(username=request.user.username)
@@ -70,10 +73,15 @@ def chat(request):
 
     contacts1.extend(contacts2)
 
+    
+
+    converser_username = request.GET.get("converser", default=contacts1[0])
+    
     return render(request, "chat.html", {
         "friend_requests": friend_requests,
         "contacts": contacts1,
-        "messages": messages_list
+        "messages": messages_list,
+        "converser": converser_username
     })
 
 

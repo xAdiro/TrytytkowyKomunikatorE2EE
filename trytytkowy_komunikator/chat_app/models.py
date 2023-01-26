@@ -26,10 +26,3 @@ class FriendRequest(Model):
 class FriendsWith(Model):
     user1 = ForeignKey(User, on_delete=CASCADE, related_name="%(class)s_requests_sent")
     user2 = ForeignKey(User, on_delete=CASCADE, related_name="%(class)s_requests_accepted")
-
-
-class KeyUserForm(ModelForm):
-    class Meta:
-        model = KeyUser
-        fields = ["username","password1","password2"]
-

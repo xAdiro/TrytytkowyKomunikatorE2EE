@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from . import models
 
@@ -12,8 +13,8 @@ def chat(request):
 
     #friend requests-------------------------
 
-    user = models.KeyUser.objects.get(username=request.user.username)
-    friend_requests = [models.KeyUser.objects.get(id=query_id["sender"])
+    user = User.objects.get(username=request.user.username)
+    friend_requests = [User.objects.get(id=query_id["sender"])
                        for query_id in
                        models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
 
@@ -24,19 +25,19 @@ def chat(request):
     messages = models.Message.objects.filter(receiver=user.id).order_by("timestamp")
 
 
-    messages_authors = [models.KeyUser.objects.get(id=query_id["author"])
+    messages_authors = [User.objects.get(id=query_id["author"])
                  for query_id in
                  messages]
     
-    messages_receivers = [models.KeyUser.objects.get(id=query_id["receiver"])
+    messages_receivers = [User.objects.get(id=query_id["receiver"])
                  for query_id in
                  messages]
     
-    messages_timestamp = [models.KeyUser.objects.get(id=query_id["timestamp"])
+    messages_timestamp = [User.objects.get(id=query_id["timestamp"])
                  for query_id in
                  messages]
 
-    messages_content = [models.KeyUser.objects.get(id=query_id["content"])
+    messages_content = [User.objects.get(id=query_id["content"])
                  for query_id in
                  messages]
 
@@ -58,11 +59,11 @@ def chat(request):
 
     #contacts--------------------------------
 
-    contacts1 =[models.KeyUser.objects.get(id=query_id["user2"])
+    contacts1 =[User.objects.get(id=query_id["user2"])
                  for query_id in
                  models.FriendsWith.objects.filter(user1=user.id).values("user2")]
 
-    contacts2 = [models.KeyUser.objects.get(id=query_id["user1"])
+    contacts2 = [User.objects.get(id=query_id["user1"])
                  for query_id in
                  models.FriendsWith.objects.filter(user2=user.id).values("user1")]
     
@@ -83,8 +84,8 @@ def send_message(request):
     content = request.POST.get("message", default="")
 
     message = models.Message(
-        author=models.KeyUser.objects.get(username=request.user.username),
-        receiver = models.KeyUser.objects.get(username=request.user.username),
+        author=User.objects.get(username=request.user.username),
+        receiver = User.objects.get(username=request.user.username),
         used_key=models.Key.objects.get(content="abcdef1234"),
         content=content
     )
@@ -137,8 +138,8 @@ def send_friend_request(request):
 
     if not _is_friend_with(request.user.username, receiver_username) and request.user.username != receiver_username:
         friend_request = models.FriendRequest(
-            sender=models.KeyUser.objects.get(username=request.user.username),
-            receiver=models.KeyUser.objects.get(username=receiver_username)
+            sender=User.objects.get(username=request.user.username),
+            receiver=User.objects.get(username=receiver_username)
         )
         friend_request.save()
 
@@ -146,8 +147,8 @@ def send_friend_request(request):
 
 
 def _is_friend_with(username1: str, username2: str) -> bool:
-    user1 = models.KeyUser.objects.get(username=username1)
-    user2 = models.KeyUser.objects.get(username=username2)
+    user1 = User.objects.get(username=username1)
+    user2 = User.objects.get(username=username2)
 
     return models.FriendsWith.objects.filter(user1=user1.id, user2=user2.id).count() >= 1 \
         or models.FriendsWith.objects.filter(user1=user2.id, user2=user1.id).count() >= 1

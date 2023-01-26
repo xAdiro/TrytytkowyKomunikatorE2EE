@@ -31,11 +31,6 @@
                     {% for request in contacts %}
                     <div class="contact">{{ request }}</div>
                     {% endfor %}
-                    {% comment %} <div class="contact"> Kontakt 1</div> {% endcomment %}
-                    {% comment %} <div class="contact"> Kontakt 2</div> {% endcomment %}
-                    {% comment %} <div class="contact"> Kontakt 3</div> {% endcomment %}
-                    {% comment %} <div class="contact"> Kontakt 4</div> {% endcomment %}
-                    {% comment %} <div class="contact"> Kontakt 5</div> {% endcomment %}
                 </div>
                 <div class="friend-request-container">
                 Zaproszenia:
@@ -50,11 +45,21 @@
             </div>
             <div class = "chatcontainer">
                 <div class="chatbox">
-                    <div class="message message-sent">Message 1</div>
+                    {% for conversation_name, isauthor, timestamp, content in messages %}
+                    {% if author = true %}
+                    <div class="message message-sent">
+                    {% else %}
+                    <div class="message message-received">
+                    {% endif %}
+                    {{timestamp}}: {{content}}</div>
+                    {% endfor %}
+
+
+                    {% comment %} <div class="message message-sent">Message 1</div>
                     <div class="message message-received">Message 2</div>
                     <div class="message message-received">Message 3</div>
                     <div class="message message-sent">Message 4</div>
-                    <div class="message message-sent">Message 5</div>
+                    <div class="message message-sent">Message 5</div> {% endcomment %}
                 </div>
                 <div class="chatUI">
                     <input id="message-field" type="text" maxlength="255">

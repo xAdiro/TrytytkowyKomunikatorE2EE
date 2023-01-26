@@ -10,18 +10,55 @@ def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
+    #friend requests-------------------------
+
     user = models.KeyUser.objects.get(username=request.user.username)
     friend_requests = [models.KeyUser.objects.get(id=query_id["sender"])
                        for query_id in
                        models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
 
-    a = models.FriendRequest.objects.only("sender").filter(receiver=user.id)
+
+    #messages--------------------------------
 
 
-    # messages =
-    # contacts =
+    messages = models.Message.objects.filter(receiver=user.id).order_by("timestamp")
 
-    contacts1 = [models.KeyUser.objects.get(id=query_id["user2"])
+
+    messages_authors = [models.KeyUser.objects.get(id=query_id["author"])
+                 for query_id in
+                 messages]
+    
+    messages_receivers = [models.KeyUser.objects.get(id=query_id["receiver"])
+                 for query_id in
+                 messages]
+    
+    messages_timestamp = [models.KeyUser.objects.get(id=query_id["timestamp"])
+                 for query_id in
+                 messages]
+
+    messages_content = [models.KeyUser.objects.get(id=query_id["content"])
+                 for query_id in
+                 messages]
+
+
+    conversation_name = []
+    is_author = []
+
+    for author, receiver in messages_authors, messages_receivers:
+        if request.user.username == author:
+            is_author.append(True)
+            conversation_name.append(receiver)
+        
+        else:
+            is_author.append(False)
+            conversation_name.append(author)
+
+    messages_list = zip(conversation_name, is_author, messages_timestamp, messages_content)
+
+
+    #contacts--------------------------------
+
+    contacts1 =[models.KeyUser.objects.get(id=query_id["user2"])
                  for query_id in
                  models.FriendsWith.objects.filter(user1=user.id).values("user2")]
 
@@ -33,7 +70,8 @@ def chat(request):
 
     return render(request, "chat.html", {
         "friend_requests": friend_requests,
-        "contacts": contacts1
+        "contacts": contacts1,
+        "messages": messages_list
     })
 
 

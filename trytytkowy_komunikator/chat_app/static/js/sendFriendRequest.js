@@ -1,4 +1,4 @@
-function addFriend(){
+function sendFriendRequest(){
     if(event.key !== 'Enter') return;
 
     let friendField = $("#add-contact-input");

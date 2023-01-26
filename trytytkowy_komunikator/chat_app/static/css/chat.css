@@ -55,6 +55,18 @@ body{
     background-color: blueviolet;
     align-self: flex-end;
     width: 100%;
-    height: 50px;
+    height: 2em;
+
+    display: flex;
+    align-items: center;
 }
 
+.chatUI input{
+    width: 100%;
+    height: 100%;
+}
+
+#send-button{
+    width: 2em;
+    height: 2em;
+}

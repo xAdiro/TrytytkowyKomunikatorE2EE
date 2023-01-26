@@ -5,8 +5,7 @@
     {% load crispy_forms_filters %}
     <form method="POST">
         {% csrf_token %}
-        {% load crispy_forms_tags %}
-        {{ form|crispy }}
+        {{ form }}
         <button type="submit" class="submit-button" >Log in</button>
     </form>
 {% endblock %}

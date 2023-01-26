@@ -3,7 +3,9 @@
 <html>
     <head>
         <title>Trytytkowy Komunikator</title>
-        <link rel="stylesheet" href="{% static 'chat.css' %}">
+        <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="{% static 'js/send.js' %}"></script>
     </head>
     <body>
         <div class="topbar">Bla</div>
@@ -25,7 +27,10 @@
                     <div class="message">Message 4</div>
                     <div class="message">Message 5</div>
                 </div>
-                <div class="chatUI"> Tu beda przyciski do wysyłania, pisania itp</div>
+                <div class="chatUI">
+                    <input id="message-field" type="text" maxlength="255">
+                    <button id="send-button" onclick="sendMessage()">&gt</button>
+                </div>
             </div>
         </div>
     </body>

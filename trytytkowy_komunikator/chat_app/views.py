@@ -1,9 +1,10 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from . import models
 
 
 def chat(request):
@@ -11,6 +12,23 @@ def chat(request):
         return redirect("/login/")
 
     return render(request, "chat.html")
+
+
+def send_message(request):
+    if not request.user.is_authenticated or request.method != "POST":
+        return redirect("/")
+
+    message_content = request.POST.get("message")
+    if message_content is None: message_content = ""
+    print(models.Key.objects.get(content="abcdef1234"))
+
+    message = models.Message(
+        author=User.objects.get(username=request.user.username),
+        receiver_key=models.Key.objects.get(content="abcdef1234"),
+        content=message_content,
+    )
+    message.save()
+    return redirect("/")
 
 
 def login_page(request):

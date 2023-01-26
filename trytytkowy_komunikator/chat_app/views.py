@@ -27,25 +27,25 @@ def chat(request):
 
     messages_authors = [User.objects.get(id=query_id["author"])
                  for query_id in
-                 messages]
+                 messages.values("author")]
     
     messages_receivers = [User.objects.get(id=query_id["receiver"])
                  for query_id in
-                 messages]
+                 messages.values("receiver")]
     
-    messages_timestamp = [User.objects.get(id=query_id["timestamp"])
+    messages_timestamp = [query_id["timestamp"]
                  for query_id in
-                 messages]
+                 messages.values("timestamp")]
 
-    messages_content = [User.objects.get(id=query_id["content"])
+    messages_content = [query_id["content"]
                  for query_id in
-                 messages]
+                 messages.values("content")]
 
 
     conversation_name = []
     is_author = []
 
-    for author, receiver in messages_authors, messages_receivers:
+    for author, receiver in zip(messages_authors, messages_receivers):
         if request.user.username == author:
             is_author.append(True)
             conversation_name.append(receiver)
@@ -85,8 +85,8 @@ def send_message(request):
 
     message = models.Message(
         author=User.objects.get(username=request.user.username),
-        receiver = User.objects.get(username=request.user.username),
-        used_key=models.Key.objects.get(content="abcdef1234"),
+        receiver=User.objects.get(username=request.user.username),
+        used_key=models.Key.objects.get(content="abc123"),
         content=content
     )
     message.save()

@@ -46,7 +46,7 @@
             <div class = "chatcontainer">
                 <div class="chatbox">
                     {% for conversation_name, isauthor, timestamp, content in messages %}
-                    {% if author = true %}
+                    {% if author %}
                     <div class="message message-sent">
                     {% else %}
                     <div class="message message-received">

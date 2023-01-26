@@ -42,6 +42,10 @@ body{
     padding: 1em;
 }
 
+.active_contact{
+    background-color: #ff7700;
+}
+
 .chatcontainer{
     background-color: blue;
     display: flex;

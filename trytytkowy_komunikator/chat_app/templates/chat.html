@@ -29,8 +29,8 @@
                 </div>
                 <div class="contacts">
                     {% for contact in contacts %}
-                    <a href="/converser={{ contact }}">    
-                    <div class="contact {% if converser = {{ contact }}%}active_contact{% endif %}">{{ contact }}</div>
+                    <a href="/?converser={{ contact }}">    
+                    <div class="contact {% if converser == contact %}active_contact{% endif %}">{{ contact }}</div>
                     </a>
                     {% endfor %}
                 </div>

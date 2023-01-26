@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from . import models
 
@@ -22,11 +23,33 @@ def chat(request):
                        models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
 
 
-    #messages--------------------------------
+    
+
+    #contacts--------------------------------
+
+    contacts1 =[str(User.objects.get(id=query_id["user2"]))
+                 for query_id in
+                 models.FriendsWith.objects.filter(user1=user.id).values("user2")]
+
+    contacts2 = [str(User.objects.get(id=query_id["user1"]))
+                 for query_id in
+                 models.FriendsWith.objects.filter(user2=user.id).values("user1")]
+    
+
+    contacts1.extend(contacts2)
+
+    if len(contacts1) > 0:
+        converser_username = request.GET.get("converser", default=contacts1[0])
+    else:
+        converser_username = request.GET.get("converser", default="")
+
+    converser_user=User.objects.get(username=converser_username)
+#messages--------------------------------
 
 
-    messages = models.Message.objects.filter(receiver=user.id).order_by("timestamp")
-
+    messages = models.Message.objects.filter(
+        Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
+        ).order_by("timestamp")
 
     messages_authors = [User.objects.get(id=query_id["author"])
                  for query_id in
@@ -60,23 +83,6 @@ def chat(request):
     messages_list = zip(conversation_name, is_author, messages_timestamp, messages_content)
 
 
-    #contacts--------------------------------
-
-    contacts1 =[User.objects.get(id=query_id["user2"])
-                 for query_id in
-                 models.FriendsWith.objects.filter(user1=user.id).values("user2")]
-
-    contacts2 = [User.objects.get(id=query_id["user1"])
-                 for query_id in
-                 models.FriendsWith.objects.filter(user2=user.id).values("user1")]
-    
-
-    contacts1.extend(contacts2)
-
-    
-
-    converser_username = request.GET.get("converser", default=contacts1[0])
-    
     return render(request, "chat.html", {
         "friend_requests": friend_requests,
         "contacts": contacts1,

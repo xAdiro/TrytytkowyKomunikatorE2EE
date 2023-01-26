@@ -22,7 +22,8 @@ function sendMessage(){
     // });
 
     $.post("/send-message/", {
-        "message": messageField.val()
+        "message_for_author": "",
+        "message_for_receiver": messageField.val()
     })
 
 

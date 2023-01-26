@@ -21,7 +21,7 @@ def delete_friend_request(request, add_frienship=False):
         friend_request.delete()
 
         if add_frienship:
-            models.FriendsWith(requesting_user, receiving_user).save()
+            models.FriendsWith(user1=requesting_user, user2=receiving_user).save()
 
     return redirect("/")
 

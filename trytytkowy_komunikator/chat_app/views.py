@@ -65,6 +65,7 @@ def chat(request):
     contacts2 = [models.KeyUser.objects.get(id=query_id["user1"])
                  for query_id in
                  models.FriendsWith.objects.filter(user2=user.id).values("user1")]
+    
 
     contacts1.extend(contacts2)
 

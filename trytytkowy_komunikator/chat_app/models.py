@@ -4,12 +4,8 @@ from django.forms import ModelForm
 
 
 class Key(Model):
+    owner = ForeignKey(User, on_delete=CASCADE)
     content = CharField(max_length=100)
-    last_used = DateField(auto_now_add=True)
-
-
-class KeyUser(User):
-    current_key = ForeignKey(Key, on_delete=SET_NULL, null=True)
 
 
 class Message(Model):

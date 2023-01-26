@@ -15,15 +15,10 @@ function sendMessage(){
     let messageField = $("#message-field");
     // let publicKey = document.getElementById("publicKey");
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/send-message/",
-    //     data: {"message": messageField.innerText}
-    // });
-
     $.post("/send-message/", {
-        "message_for_author": "",
-        "message_for_receiver": messageField.val()
+        "receiver": "",
+        "message": messageField.val(),
+        "used_key": ""
     })
 
 

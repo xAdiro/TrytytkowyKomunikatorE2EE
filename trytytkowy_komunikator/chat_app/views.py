@@ -41,14 +41,13 @@ def send_message(request):
     if not request.user.is_authenticated or request.method != "POST":
         return redirect("/")
 
-    message_author_content = request.POST.get("message_for_author", default="")
-    message_receiver_content = request.POST.get("message_for_receiver", default="")
+    content = request.POST.get("message", default="")
 
     message = models.Message(
         author=models.KeyUser.objects.get(username=request.user.username),
-        receiver_key=models.Key.objects.get(content="abcdef1234"),
-        author_content=message_author_content,
-        receiver_content=message_receiver_content
+        receiver = models.KeyUser.objects.get(username=request.user.username),
+        used_key=models.Key.objects.get(content="abcdef1234"),
+        content=content
     )
     message.save()
     return redirect("/")

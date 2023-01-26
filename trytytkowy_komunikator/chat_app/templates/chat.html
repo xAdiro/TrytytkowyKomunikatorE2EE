@@ -28,11 +28,16 @@
                     <input id="add-contact-input" type="text" onkeydown="sendFriendRequest()">
                 </div>
                 <div class="contacts">
-                    <div class="contact"> Kontakt 1</div>
-                    <div class="contact"> Kontakt 2</div>
-                    <div class="contact"> Kontakt 3</div>
-                    <div class="contact"> Kontakt 4</div>
-                    <div class="contact"> Kontakt 5</div>
+                    {% for request in contacts %}
+                    <div class="contact">
+                        {{ request }}
+                    </div>
+                    {% endfor %}
+                    {% comment %} <div class="contact"> Kontakt 1</div> {% endcomment %}
+                    {% comment %} <div class="contact"> Kontakt 2</div> {% endcomment %}
+                    {% comment %} <div class="contact"> Kontakt 3</div> {% endcomment %}
+                    {% comment %} <div class="contact"> Kontakt 4</div> {% endcomment %}
+                    {% comment %} <div class="contact"> Kontakt 5</div> {% endcomment %}
                 </div>
                 <div class="friend-request-container">
                 Zaproszenia:

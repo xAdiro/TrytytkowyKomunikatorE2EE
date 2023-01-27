@@ -4,6 +4,6 @@
     {% else %}
         <div class="message message-received">
     {% endif %}
-    {{timestamp}}: {{content}}
+    {{timestamp}}: <div class="message-content">{{content}}</div>
         </div>
 {% endfor %}

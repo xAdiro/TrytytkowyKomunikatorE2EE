@@ -15,11 +15,16 @@ function sendMessage(){
     let messageField = $("#message-field");
     // let publicKey = document.getElementById("publicKey");
 
+    //send for me
+    let toSend = encryptForMe(messageField.val())
+    console.log(toSend);
     $.post("/send-message/", {
         "receiver": converser,
-        "message": messageField.val(),
-        "used_key": ""
+        "message": toSend,
+        "used_key": cryptico.publicKeyString(currentKey)
     })
+
+    //send for receiver
 
 
     messageField.val("")

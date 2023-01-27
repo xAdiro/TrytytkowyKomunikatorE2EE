@@ -154,9 +154,20 @@ def send_friend_request(request):
     return redirect("/")
 
 
+def update_pub_key(request):
+    if request.method == "POST":
+        new_key = request.POST["key"]
+        user = User.objects.get(username=request.user.username)
+        models.Key.objects.filter(owner=user).delete()
+        models.Key(owner=user, content=new_key).save()
+
+        return redirect("/")
+
+
 def _is_friend_with(username1: str, username2: str) -> bool:
     user1 = User.objects.get(username=username1)
     user2 = User.objects.get(username=username2)
 
     return models.FriendsWith.objects.filter(user1=user1.id, user2=user2.id).count() >= 1 \
         or models.FriendsWith.objects.filter(user1=user2.id, user2=user1.id).count() >= 1
+

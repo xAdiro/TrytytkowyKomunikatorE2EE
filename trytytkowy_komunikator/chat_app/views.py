@@ -108,7 +108,6 @@ def register_page(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, "Registration successful")
             return redirect("/")
 
         return render(request, "register.html", {"form": forms.NewUserForm(request.POST)})

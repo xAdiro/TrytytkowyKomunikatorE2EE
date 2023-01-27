@@ -8,9 +8,7 @@
     </head>
     <body>
         <h1 class="page-title">{% block title %}{% endblock %}</h1>
-        <div class="form-container">
-            {% block form_element %} {% endblock %}
-        </div>
+
         {% if messages %}
             <div class="login-message">
                 {% for message in messages %}
@@ -19,5 +17,8 @@
             </div>
         {% endif %}
 
+        <div class="form-container">
+            {% block form_element %} {% endblock %}
+        </div>
     </body>
 </html>

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from . import models
-from . import actions
+from . import forms
 
 
 def chat(request):
@@ -122,18 +122,17 @@ def login_page(request):
 
 def register_page(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = forms.NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful")
             return redirect("/")
 
-        messages.add_message(request, messages.ERROR, form.error_messages)
-        return render(request, "register.html")
+        return render(request, "register.html", {"form": forms.NewUserForm(request.POST)})
 
     else:
-        return render(request, "register.html", {"form": UserCreationForm(request.POST)})
+        return render(request, "register.html", {"form": forms.NewUserForm(request.POST)})
 
 
 def logout_action(request):

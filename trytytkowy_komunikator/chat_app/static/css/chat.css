@@ -12,16 +12,21 @@ body{
     border-radius: 1em;
     text-align: center;
     text-decoration: none;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .buttonrequest{
     background-color: #5DA399;
     border: 1px solid black;
     color: black;
-    padding: 1em 1em;
+    padding: 1em;
     border-radius: 1em;
     text-align: center;
     text-decoration: none;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
+    height: 1.5em;
+    display: flex;
+    align-items: center;
 }
 
 .topbar{
@@ -40,8 +45,8 @@ body{
 
 .topbar-item{
     height:25%;
-    text-align: justify center;
-    padding: 1em, 1em;
+    text-align: center;
+    padding: 1em;
     align-self: center;
 }
 
@@ -61,6 +66,13 @@ body{
     box-sizing: border-box;
     border: 1px solid black;
 }
+
+.contact-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 
 .add-contact{
     background-color: #35393C;
@@ -86,6 +98,7 @@ body{
     border-radius: 1em;
     padding: 1em 1em;
     text-align: center;
+    flex-grow:1;
 }
 
 a:link{

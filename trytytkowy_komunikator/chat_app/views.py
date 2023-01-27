@@ -240,7 +240,7 @@ def friend_requests(request):
 def delete_friend(request):
     friend_username = request.POST["friend_username"]
     models.FriendsWith.objects.get(
-        Q(user1=request.user, user2=User.objects.get(username=friend_username) |
-        Q(user2=request.user, user1=User.objects.get(username=friend_username)))
+        Q(user1=request.user, user2=User.objects.get(username=friend_username)) |
+        Q(user2=request.user, user1=User.objects.get(username=friend_username))
     ).delete()
     return redirect("/")

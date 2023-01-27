@@ -46,9 +46,8 @@ def chatbox(request):
         # messages--------------------------------
         messages = models.Message.objects.filter(
             Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
-        ).order_by("timestamp")
+        ).order_by("-timestamp")
 
-        print(messages)
         messages_authors = [User.objects.get(id=query_id["author"])
                             for query_id in
                             messages.values("author")]
@@ -69,7 +68,7 @@ def chatbox(request):
         is_author = []
 
         for author, receiver in zip(messages_authors, messages_receivers):
-            if request.user.username == author:
+            if request.user.username == author.username:
                 is_author.append(True)
                 conversation_name.append(receiver)
 
@@ -90,10 +89,11 @@ def send_message(request):
         return redirect("/")
 
     content = request.POST.get("message", default="")
+    receiver_name = request.POST.get("receiver")
 
     message = models.Message(
         author=User.objects.get(username=request.user.username),
-        receiver=User.objects.get(username=request.user.username),
+        receiver=User.objects.get(username=receiver_name),
         used_key=models.Key.objects.get(content="abc123"),
         content=content
     )

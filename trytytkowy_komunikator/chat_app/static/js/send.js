@@ -16,7 +16,7 @@ function sendMessage(){
     // let publicKey = document.getElementById("publicKey");
 
     $.post("/send-message/", {
-        "receiver": "",
+        "receiver": converser,
         "message": messageField.val(),
         "used_key": ""
     })

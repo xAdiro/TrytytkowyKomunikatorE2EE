@@ -13,13 +13,13 @@ def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
-    #friend requests-------------------------
+    # friend requests-------------------------
 
     user = User.objects.get(username=request.user.username)
 
-    #contacts--------------------------------
+    # contacts--------------------------------
 
-    contacts1 =[str(User.objects.get(id=query_id["user2"]))
+    contacts1 = [str(User.objects.get(id=query_id["user2"]))
                  for query_id in
                  models.FriendsWith.objects.filter(user1=user.id).values("user2")]
 
@@ -147,7 +147,8 @@ def send_friend_request(request):
     receiver_username = request.POST.get("username", default="")
     receiver_user = User.objects.get(username=receiver_username)
 
-    if models.FriendRequest.objects.filter(sender=request.user, receiver=User.objects.get(username=receiver_username)).count() > 0:
+    if models.FriendRequest.objects.filter(sender=request.user,
+                                           receiver=User.objects.get(username=receiver_username)).count() > 0:
         return redirect("/")
 
     if models.FriendRequest.objects.filter(sender=receiver_user, receiver=request.user).count() > 0:
@@ -189,9 +190,19 @@ def change_password_page(request):
 
 def friend_requests(request):
     friend_requests_list = [User.objects.get(id=query_id["sender"])
-                       for query_id in
-                       models.FriendRequest.objects.only("sender").filter(receiver=request.user.id).values("sender")]
+                            for query_id in
+                            models.FriendRequest.objects.only("sender").filter(receiver=request.user.id).values(
+                                "sender")]
 
     return render(request, "friend_requests.html", {
         "friend_requests": friend_requests_list
     })
+
+
+def delete_friend(request):
+    friend_username = request.POST["friend_username"]
+    models.FriendsWith.objects.get(
+        Q(user1=request.user, user2=User.objects.get(username=friend_username) |
+        Q(user2=request.user, user1=User.objects.get(username=friend_username)))
+    ).delete()
+    return redirect("/")

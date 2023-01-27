@@ -42,10 +42,13 @@ def chatbox(request):
         converser_username = request.GET["converser"]
         converser_user = User.objects.get(username=converser_username)
         user = User.objects.get(username=request.user)
+        key = models.Key.objects.get(owner=user.id)
+        converser_key = models.Key.objects.get(owner=converser_user.id)
 
         # messages--------------------------------
         messages = models.Message.objects.filter(
-            Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
+            Q(receiver=user.id, author=converser_user.id, used_key=key.id)
+            | Q(receiver=converser_user.id, author=user.id, used_key=key.id)
         ).order_by("-timestamp")
 
         messages_authors = [User.objects.get(id=query_id["author"])
@@ -81,6 +84,7 @@ def chatbox(request):
         return render(request, "chatbox_content.html", {
             "messages": messages_list,
             "converser": converser_username,
+            "converser_pub_key": converser_key.content
         })
 
 
@@ -90,11 +94,12 @@ def send_message(request):
 
     content = request.POST.get("message", default="")
     receiver_name = request.POST.get("receiver")
+    used_key = request.POST.get("used_key")
 
     message = models.Message(
         author=User.objects.get(username=request.user.username),
         receiver=User.objects.get(username=receiver_name),
-        used_key=models.Key.objects.get(content="abc123"),
+        used_key=models.Key.objects.get(content=used_key),
         content=content
     )
     message.save()

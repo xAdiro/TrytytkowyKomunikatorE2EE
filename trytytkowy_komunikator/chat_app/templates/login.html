@@ -2,11 +2,11 @@
 {% block title %}Log in{% endblock %}
 
 {% block form_element %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" placeholder="Login" id="login" name="login">
-    <input type="password" placeholder="Hasło" id="password" name="password">
-    <button type="submit" class="submit-button">Log in</button>
-</form>
-<a href="/register">Register<a>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="Login" id="login" name="login">
+        <input type="password" placeholder="Hasło" id="password" name="password">
+        <button type="submit" class="submit-button">Log in</button>
+    </form>
+    <a href="/register/">Don't have an account? Create one here</a>
 {% endblock %}

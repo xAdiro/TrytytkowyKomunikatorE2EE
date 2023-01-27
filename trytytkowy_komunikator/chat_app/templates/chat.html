@@ -30,11 +30,10 @@
                 {% csrf_token %}
                 <button type="submit" class="buttontopbar">Log out</button>
             </form>
-            
-            <form action="/change-password/" method="POST" class="topbar_item">
-                {% csrf_token %}
-                <button type="submit" class="buttontopbar">Change Password</button>
-            </form>
+
+            <a href="/change-password/" class="buttontopbar topbar_item">
+                Change password
+            </a>
         </div>
         <div class="UIcontainer">
             <div class="contacts-container">

@@ -1,13 +1,29 @@
 *{
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
+
+body{
+  background-color: #35393C;
+}
+
 a{
     text-decoration: none;
     color: #21251e;
 }
 
+.interactable-text{
+  color: #21251e;
+  text-align: center;
+  margin-top: 1em;
+}
+
+.interactable-text:hover{
+  color: white;
+}
+
 .page-title{
     text-align: center;
+    color:white;
 }
 
 .form-container{
@@ -19,9 +35,9 @@ a{
     max-width: 20em;
     padding: 2em;
 
-    background-color: #77c265;
+    background-color: #397367;
     border-radius: 20px;
-    border: 1px solid #00240a;
+    border: 1px solid black;
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 .form-container > form{

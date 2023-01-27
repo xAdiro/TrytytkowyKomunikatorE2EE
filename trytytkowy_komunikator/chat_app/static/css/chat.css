@@ -15,7 +15,28 @@ body{
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
+.buttontopbar:hover{
+    background-color: #5DA399;
+}
+
 .buttonrequest{
+    background-color: #5DA399;
+    border: 1px solid black;
+    color: black;
+    padding: 1em 1em;
+    border-radius: 1em;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
+    display: flex;
+    align-items: center;
+}
+
+.buttonrequest:hover{
+    background-color: #42858C;
+}
+
+.buttondelete{
     background-color: #5DA399;
     border: 1px solid black;
     color: black;
@@ -27,6 +48,10 @@ body{
     height: 1.5em;
     display: flex;
     align-items: center;
+}
+
+.buttondelete:hover{
+    background-color: #42858C;
 }
 
 .topbar{
@@ -102,6 +127,10 @@ body{
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
+.contact:hover{
+    background-color: #5DA399;
+}
+
 a:link{
     text-decoration: none;
     color:rgb(255, 255, 255);
@@ -127,6 +156,15 @@ a:link{
     padding: 1em 1em;
     text-align: center;
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
+    display: flex;
+    flex-grow:1;
+    align-items: center;
+}
+
+.fiend-request-item{
+    text-align: center;
+    padding: 1em 1em;
+    align-self: center;
 }
 
 .chatcontainer{
@@ -155,16 +193,18 @@ a:link{
     border-radius: 1em;
     width: 50%;
     align-self: flex-end;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .message-received{
     align-self: flex-start;
     background-color: whitesmoke;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .message-sent{
     align-self: flex-end;
-    background-color: cyan;
+    background-color: #63CCCA;
 }
 
 .chatUI{

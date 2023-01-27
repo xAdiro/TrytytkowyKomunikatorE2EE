@@ -171,3 +171,6 @@ def _is_friend_with(username1: str, username2: str) -> bool:
     return models.FriendsWith.objects.filter(user1=user1.id, user2=user2.id).count() >= 1 \
         or models.FriendsWith.objects.filter(user1=user2.id, user2=user1.id).count() >= 1
 
+
+def change_password_page(request):
+    return render(request, "change_password")

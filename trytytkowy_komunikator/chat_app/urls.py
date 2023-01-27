@@ -13,5 +13,6 @@ urlpatterns = [
     path("add-friend/", views.send_friend_request),
     path("accept-friend-request/", actions.accept_friend_request),
     path("", views.chat),
+    path("change-password/", views.change_password_page),
     path("update-pub-key/", views.update_pub_key)
 ]

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from . import models
+from . import actions
 
 
 def chat(request):
@@ -144,6 +145,15 @@ def send_friend_request(request):
         return redirect("/")
 
     receiver_username = request.POST.get("username", default="")
+    receiver_user = User.objects.get(username=receiver_username)
+
+    if models.FriendRequest.objects.filter(sender=request.user, receiver=User.objects.get(username=receiver_username)).count() > 0:
+        return redirect("/")
+
+    if models.FriendRequest.objects.filter(sender=receiver_user, receiver=request.user).count() > 0:
+        models.FriendRequest.objects.get(sender=receiver_user, receiver=request.user).delete()
+        models.FriendsWith(user1=receiver_user, user2=request.user).save()
+        return redirect("/")
 
     if not _is_friend_with(request.user.username, receiver_username) and request.user.username != receiver_username:
         friend_request = models.FriendRequest(

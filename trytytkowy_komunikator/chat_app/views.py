@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 
@@ -184,8 +185,46 @@ def _is_friend_with(username1: str, username2: str) -> bool:
         or models.FriendsWith.objects.filter(user1=user2.id, user2=user1.id).count() >= 1
 
 
+
 def change_password_page(request):
-    return render(request, "change_password")
+    return render(request, "change_password.html",{"form": PasswordChangeForm(request.POST)})
+
+def change_password_action(request):
+    print("DDDDDDDD")
+    if request.method == 'POST':
+            form = PasswordChangeForm(request.user, request.POST)
+            print("CCCCCCCC")
+            if form.is_valid():
+                print("BBBBBBBBBBBB")
+                messages.success(request, 'Your password was successfully updated!')
+                user = form.save()
+                update_session_auth_hash(request, user)
+                return redirect("/")
+            else:
+                print("AAAAAAAAAAAA")
+                messages.error(request, "Please correct the error below.")
+                return redirect("/change-password/")
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, "chat.html")
+
+
+    # if request.method == "POST":
+    #     oldpassword = request.POST["old-password"]
+    #     newpassword = request.POST["new-password"]
+    #     newpassword2 = request.POST["new-password2"]
+    #     user = authenticate(request, username=request.user.username, password=oldpassword)
+    #     print(user)
+    #     if user is None:
+    #         messages.add_message(request, messages.ERROR, "Wrong old password")
+    #         return redirect("/change-password/")
+    #     if newpassword != newpassword2:
+    #         messages.add_message(request, messages.ERROR, "Password mismatched")
+    #         return redirect("/change-password/")
+    #     user.set_password(newpassword)
+    #     user.save()
+    #     return redirect("/")
+    # return redirect("/")
 
 
 def friend_requests(request):

@@ -15,6 +15,6 @@ urlpatterns = [
     path("delete-friend-request/", actions.delete_friend_request),
     path("", views.chat),
     path("change-password/", views.change_password_page),
-    path("update-pub-key/", views.update_pub_key),
-    path("friend-requests/", views.friend_requests)
+    path("change-password-action/", views.change_password_action),
+    path("update-pub-key/", views.update_pub_key)
 ]

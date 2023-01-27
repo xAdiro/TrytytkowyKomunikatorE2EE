@@ -2,7 +2,6 @@
 {% block title %} Registration {% endblock %}
 
 {% block form_element %}
-    {% load crispy_forms_filters %}
     <form method="POST">
         {% csrf_token %}
         {{ form }}

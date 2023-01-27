@@ -21,6 +21,7 @@
         <script src="{% static 'js/encryption.js' %}"></script>
         <script src="{% static 'js/refreshChat.js' %}"></script>
         <script src="{% static 'js/deleteFriend.js' %}"></script>
+        <script src="{% static 'js/loadFriends.js' %}"></script>
     </head>
     <body>
         <div class="topbar">
@@ -42,18 +43,9 @@
                     <br>
                     <input id="add-contact-input" type="text" onkeydown="sendFriendRequest()">
                 </div>
-                <div class="contacts">
-                    <div class="friend-request-container">Friends</div>
-                    {% for contact in contacts %}
-                        <div class="contact-container">
-                            <div onclick = "selectChat('{{ contact }}', this)" class="contact">
-                                {{ contact }}
-                            </div>
-                            <div>
-                                <button onclick="deleteFriend('{{ contact }}')" class="buttondelete">X</button>
-                            </div>
-                        </div>
-                    {% endfor %}
+                <div class="contacts" id="contacts">
+
+
                 </div>
                 <div class="friend-request-container" id="friend-request-container">
                 Friend Requests

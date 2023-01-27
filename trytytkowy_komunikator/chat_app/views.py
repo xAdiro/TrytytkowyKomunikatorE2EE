@@ -14,25 +14,7 @@ def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
-    # friend requests-------------------------
-
-    user = User.objects.get(username=request.user.username)
-
-    # contacts--------------------------------
-
-    contacts1 = [str(User.objects.get(id=query_id["user2"]))
-                 for query_id in
-                 models.FriendsWith.objects.filter(user1=user.id).values("user2")]
-
-    contacts2 = [str(User.objects.get(id=query_id["user1"]))
-                 for query_id in
-                 models.FriendsWith.objects.filter(user2=user.id).values("user1")]
-
-    contacts1.extend(contacts2)
-
-    return render(request, "chat.html", {
-        "contacts": contacts1,
-    })
+    return render(request, "chat.html")
 
 
 def chatbox(request):
@@ -240,3 +222,17 @@ def delete_friend(request):
         Q(user2=request.user, user1=User.objects.get(username=friend_username))
     ).delete()
     return redirect("/")
+
+
+def contacts(request):
+    contacts1 = [str(User.objects.get(id=query_id["user2"]))
+                 for query_id in
+                 models.FriendsWith.objects.filter(user1=request.user.id).values("user2")]
+
+    contacts2 = [str(User.objects.get(id=query_id["user1"]))
+                 for query_id in
+                 models.FriendsWith.objects.filter(user2=request.user.id).values("user1")]
+
+    contacts1.extend(contacts2)
+
+    return render(request, "contacts.html", {"contacts": contacts1})

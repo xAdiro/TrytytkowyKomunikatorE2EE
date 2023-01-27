@@ -1,0 +1,11 @@
+<div class="friend-request-container">Friends</div>
+{% for contact in contacts %}
+    <div class="contact-container">
+        <div onclick = "selectChat('{{ contact }}', this)" class="contact">
+            {{ contact }}
+        </div>
+        <div>
+            <button onclick="deleteFriend('{{ contact }}')" class="buttondelete">X</button>
+        </div>
+    </div>
+{% endfor %}

@@ -19,7 +19,7 @@ body{
     background-color: #5DA399;
     border: 1px solid black;
     color: black;
-    padding: 1em;
+    padding: 1em 1em;
     border-radius: 1em;
     text-align: center;
     text-decoration: none;
@@ -99,6 +99,7 @@ body{
     padding: 1em 1em;
     text-align: center;
     flex-grow:1;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 a:link{
@@ -125,6 +126,7 @@ a:link{
     border-radius: 1em;
     padding: 1em 1em;
     text-align: center;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .chatcontainer{

@@ -30,8 +30,10 @@ body{
     height: 10vh;
     display: flex;
     flex-direction:row-reverse;
+    align-items: center;
     padding-right: 1em;
     text-align: right;
+    gap: 1em;
     box-sizing: border-box;
     border: 1px solid black;
 }

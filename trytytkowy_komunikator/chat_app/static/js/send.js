@@ -12,14 +12,10 @@ $.ajaxSetup({
 });
 
 function sendMessage(){
+    if(converser === null){
+        return;
+    }
     let messageField = $("#message-field");
-
-    //send for me
-    $.post("/send-message/", {
-        "receiver": converser,
-        "message": encryptForMe(messageField.val()),
-        "used_key": cryptico.publicKeyString(currentKey)
-    })
 
     //send for receiver
     let mess = encryptForSomeone(messageField.val(), converserPubKey);
@@ -28,10 +24,17 @@ function sendMessage(){
         "receiver": converser,
         "message": mess,
         "used_key": converserPubKey
-    })
+    });
 
 
-    messageField.val("")
+    //send for me
+    $.post("/send-message/", {
+        "receiver": converser,
+        "message": encryptForMe(messageField.val()),
+        "used_key": cryptico.publicKeyString(currentKey)
+    }, refreshChat);
+
+    messageField.val("");
 }
 
 function getCookie(cname) {

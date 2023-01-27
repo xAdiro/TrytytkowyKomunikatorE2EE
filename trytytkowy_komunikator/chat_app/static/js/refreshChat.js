@@ -1,6 +1,6 @@
 $(function (){
     const seconds = 2;
-    setInterval(refreshChat, seconds*1000);
+    setInterval(() => {refreshChat();refreshFriendRequests();}, seconds*1000);
 });
 function refreshChat(){
     if(converser===null){
@@ -15,4 +15,8 @@ function refreshChat(){
             converserPubKey = $("#converser-pub-key").text()
     });
     console.log("chat refreshed");
+}
+
+function refreshFriendRequests(){
+    $("#friend-request-container").load("friend-requests/");
 }

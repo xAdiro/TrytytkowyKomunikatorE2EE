@@ -48,15 +48,8 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="friend-request-container">
+                <div class="friend-request-container" id="friend-request-container">
                 Friend Requests
-                {% for request in friend_requests %}
-                    <div class="friend-request">
-                        {{ request }}
-                        <button class="buttonrequest" onclick="acceptRequest('{{ request }}')">Potwierdź</button>
-                        <button class="buttonrequest" onclick="deleteRequest('{{ request }}')">Usuń</button>
-                    </div>
-                {% endfor %}
             </div>
             </div>
             <div class = "chatcontainer">

@@ -15,9 +15,6 @@ def chat(request):
     #friend requests-------------------------
 
     user = User.objects.get(username=request.user.username)
-    friend_requests = [User.objects.get(id=query_id["sender"])
-                       for query_id in
-                       models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
 
     #contacts--------------------------------
 
@@ -32,7 +29,6 @@ def chat(request):
     contacts1.extend(contacts2)
 
     return render(request, "chat.html", {
-        "friend_requests": friend_requests,
         "contacts": contacts1,
     })
 
@@ -179,3 +175,13 @@ def _is_friend_with(username1: str, username2: str) -> bool:
 
 def change_password_page(request):
     return render(request, "change_password")
+
+
+def friend_requests(request):
+    friend_requests_list = [User.objects.get(id=query_id["sender"])
+                       for query_id in
+                       models.FriendRequest.objects.only("sender").filter(receiver=request.user.id).values("sender")]
+
+    return render(request, "friend_requests.html", {
+        "friend_requests": friend_requests_list
+    })

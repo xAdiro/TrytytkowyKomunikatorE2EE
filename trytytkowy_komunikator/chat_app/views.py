@@ -184,24 +184,20 @@ def _is_friend_with(username1: str, username2: str) -> bool:
         or models.FriendsWith.objects.filter(user1=user2.id, user2=user1.id).count() >= 1
 
 
-
 def change_password_page(request):
     return render(request, "change_password.html",{"form": PasswordChangeForm(request.POST)})
 
+
 def change_password_action(request):
-    print("DDDDDDDD")
     if request.method == 'POST':
             form = PasswordChangeForm(request.user, request.POST)
-            print("CCCCCCCC")
             if form.is_valid():
-                print("BBBBBBBBBBBB")
                 messages.success(request, 'Your password was successfully updated!')
                 user = form.save()
                 update_session_auth_hash(request, user)
                 return redirect("/")
             else:
-                print("AAAAAAAAAAAA")
-                messages.error(request, "Please correct the error below.")
+                messages.error(request, "Please input correct credentials")
                 return redirect("/change-password/")
     else:
         form = PasswordChangeForm(request.user)

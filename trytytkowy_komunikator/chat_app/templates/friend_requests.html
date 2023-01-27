@@ -1,0 +1,8 @@
+Friend Requests
+{% for request in friend_requests %}
+    <div class="friend-request">
+        {{ request }}
+        <button class="buttonrequest" onclick="acceptRequest('{{ request }}')">Potwierdź</button>
+        <button class="buttonrequest" onclick="deleteRequest('{{ request }}')">Usuń</button>
+    </div>
+{% endfor %}

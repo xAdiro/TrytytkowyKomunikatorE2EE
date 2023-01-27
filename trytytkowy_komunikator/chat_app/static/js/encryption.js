@@ -13,11 +13,13 @@ function generateRSAPair() {
 }
 
 function encryptForMe(text) {
-    return cryptico.encrypt(text, cryptico.publicKeyString(currentKey))["cipher"]
+    return cryptico.encrypt(text, cryptico.publicKeyString(currentKey))["cipher"];
 }
 
-function encryptForSomeone(text, RSAKeyString){
-    return cryptico.encrypt(text, RSAKeyString)
+function encryptForSomeone(text, RSAString){
+    let mess = cryptico.encrypt(text, RSAString);
+    console.log("sending" + mess["cipher"]);
+    return mess["cipher"];
 }
 
 function decrypt(text){

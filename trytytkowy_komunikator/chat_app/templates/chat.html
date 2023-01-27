@@ -19,6 +19,7 @@
         <script src="{% static 'js/deleteRequest.js' %}"></script>
         <script src="{% static 'js/selectChat.js' %}"></script>
         <script src="{% static 'js/encryption.js' %}"></script>
+        <script src="{% static 'js/refreshChat.js' %}"></script>
     </head>
     <body>
         <div class="topbar">
@@ -48,26 +49,16 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="friend-request-container">
+                <div class="friend-request-container" id="friend-request-container">
                 Friend Requests
-                {% for request in friend_requests %}
-                    <div class="friend-request">
-                        {{ request }}
-                        <button class="buttonrequest" onclick="acceptRequest('{{ request }}')">Potwierdź</button>
-                        <button class="buttonrequest" onclick="deleteRequest('{{ request }}')">Usuń</button>
-                    </div>
-                {% endfor %}
             </div>
             </div>
             <div class = "chatcontainer">
                 <div class="chatbox" id="chatbox">
 
-
-
                 </div>
                 <div class="chatUI">
-                    <input id="message-field" type="text" maxlength="255">
-                    <button id="send-button" onclick="sendMessage()">&gt</button>
+                    <input id="message-field" type="text" maxlength="255" onkeydown="sendMessage()" placeholder="Aa">
                 </div>
             </div>
         </div>

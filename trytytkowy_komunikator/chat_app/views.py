@@ -7,22 +7,20 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from . import models
+from . import actions
 
 
 def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
-    #friend requests-------------------------
+    # friend requests-------------------------
 
     user = User.objects.get(username=request.user.username)
-    friend_requests = [User.objects.get(id=query_id["sender"])
-                       for query_id in
-                       models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
 
-    #contacts--------------------------------
+    # contacts--------------------------------
 
-    contacts1 =[str(User.objects.get(id=query_id["user2"]))
+    contacts1 = [str(User.objects.get(id=query_id["user2"]))
                  for query_id in
                  models.FriendsWith.objects.filter(user1=user.id).values("user2")]
 
@@ -33,7 +31,6 @@ def chat(request):
     contacts1.extend(contacts2)
 
     return render(request, "chat.html", {
-        "friend_requests": friend_requests,
         "contacts": contacts1,
     })
 
@@ -43,10 +40,13 @@ def chatbox(request):
         converser_username = request.GET["converser"]
         converser_user = User.objects.get(username=converser_username)
         user = User.objects.get(username=request.user)
+        key = models.Key.objects.get(owner=user.id)
+        converser_key = models.Key.objects.get(owner=converser_user.id)
 
         # messages--------------------------------
         messages = models.Message.objects.filter(
-            Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
+            Q(receiver=user.id, author=converser_user.id, used_key=key.id)
+            | Q(receiver=converser_user.id, author=user.id, used_key=key.id)
         ).order_by("-timestamp")
 
         messages_authors = [User.objects.get(id=query_id["author"])
@@ -82,6 +82,7 @@ def chatbox(request):
         return render(request, "chatbox_content.html", {
             "messages": messages_list,
             "converser": converser_username,
+            "converser_pub_key": converser_key.content
         })
 
 
@@ -91,11 +92,12 @@ def send_message(request):
 
     content = request.POST.get("message", default="")
     receiver_name = request.POST.get("receiver")
+    used_key = request.POST.get("used_key")
 
     message = models.Message(
         author=User.objects.get(username=request.user.username),
         receiver=User.objects.get(username=receiver_name),
-        used_key=models.Key.objects.get(content="abc123"),
+        used_key=models.Key.objects.get(content=used_key),
         content=content
     )
     message.save()
@@ -144,6 +146,16 @@ def send_friend_request(request):
         return redirect("/")
 
     receiver_username = request.POST.get("username", default="")
+    receiver_user = User.objects.get(username=receiver_username)
+
+    if models.FriendRequest.objects.filter(sender=request.user,
+                                           receiver=User.objects.get(username=receiver_username)).count() > 0:
+        return redirect("/")
+
+    if models.FriendRequest.objects.filter(sender=receiver_user, receiver=request.user).count() > 0:
+        models.FriendRequest.objects.get(sender=receiver_user, receiver=request.user).delete()
+        models.FriendsWith(user1=receiver_user, user2=request.user).save()
+        return redirect("/")
 
     if not _is_friend_with(request.user.username, receiver_username) and request.user.username != receiver_username:
         friend_request = models.FriendRequest(
@@ -186,7 +198,7 @@ def change_password_action(request):
                 print("BBBBBBBBBBBB")
                 messages.success(request, 'Your password was successfully updated!')
                 user = form.save()
-                update_session_auth_hash(request, user) 
+                update_session_auth_hash(request, user)
                 return redirect("/")
             else:
                 print("AAAAAAAAAAAA")
@@ -195,8 +207,8 @@ def change_password_action(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "chat.html")
-    
-    
+
+
     # if request.method == "POST":
     #     oldpassword = request.POST["old-password"]
     #     newpassword = request.POST["new-password"]
@@ -213,3 +225,23 @@ def change_password_action(request):
     #     user.save()
     #     return redirect("/")
     # return redirect("/")
+
+
+def friend_requests(request):
+    friend_requests_list = [User.objects.get(id=query_id["sender"])
+                            for query_id in
+                            models.FriendRequest.objects.only("sender").filter(receiver=request.user.id).values(
+                                "sender")]
+
+    return render(request, "friend_requests.html", {
+        "friend_requests": friend_requests_list
+    })
+
+
+def delete_friend(request):
+    friend_username = request.POST["friend_username"]
+    models.FriendsWith.objects.get(
+        Q(user1=request.user, user2=User.objects.get(username=friend_username) |
+        Q(user2=request.user, user1=User.objects.get(username=friend_username)))
+    ).delete()
+    return redirect("/")

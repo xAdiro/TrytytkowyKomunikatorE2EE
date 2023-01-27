@@ -1,7 +1,12 @@
+$(function () {
+    $("#message-field")
+})
+
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
 
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
@@ -12,22 +17,31 @@ $.ajaxSetup({
 });
 
 function sendMessage(){
-    let messageField = $("#message-field");
-    // let publicKey = document.getElementById("publicKey");
+    if(event.key !== 'Enter') return;
 
-    //send for me
-    let toSend = encryptForMe(messageField.val())
-    console.log(toSend);
-    $.post("/send-message/", {
-        "receiver": converser,
-        "message": toSend,
-        "used_key": cryptico.publicKeyString(currentKey)
-    })
+    if(converser === null){
+        return;
+    }
+    let messageField = $("#message-field");
 
     //send for receiver
+    let mess = encryptForSomeone(messageField.val(), converserPubKey);
+    console.log(mess);
+    $.post("/send-message/", {
+        "receiver": converser,
+        "message": mess,
+        "used_key": converserPubKey
+    });
 
 
-    messageField.val("")
+    //send for me
+    $.post("/send-message/", {
+        "receiver": converser,
+        "message": encryptForMe(messageField.val()),
+        "used_key": cryptico.publicKeyString(currentKey)
+    }, refreshChat);
+
+    messageField.val("");
 }
 
 function getCookie(cname) {
@@ -45,3 +59,4 @@ function getCookie(cname) {
   }
   return "";
 }
+

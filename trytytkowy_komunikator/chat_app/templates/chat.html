@@ -43,6 +43,7 @@
                     <input id="add-contact-input" type="text" onkeydown="sendFriendRequest()">
                 </div>
                 <div class="contacts">
+                    <div class="friend-request-container">Friends</div>
                     {% for contact in contacts %}
                         <div class="contact-container">
                             <div onclick = "selectChat('{{ contact }}', this)" class="contact">

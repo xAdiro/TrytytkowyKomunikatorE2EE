@@ -22,16 +22,17 @@
     </head>
     <body>
         <div class="topbar">
-            Hello {{ user.get_username }}
-            <form action="/logout/" method="POST">
+            <div class="topbar_item">Hello {{ user.get_username }}</div>
+            
+            <form action="/logout/" method="POST" class="topbar_item">
                 {% csrf_token %}
                 <button type="submit" class="buttontopbar">Log out</button>
             </form>
-            <form action="/change_password/" method="POST">
+            
+            <form action="/change-password/" method="POST" class="topbar_item">
                 {% csrf_token %}
                 <button type="submit" class="buttontopbar">Change Password</button>
             </form>
-
         </div>
         <div class="UIcontainer">
             <div class="contacts-container">

@@ -12,5 +12,6 @@ urlpatterns = [
     path("chatbox/", views.chatbox),
     path("add-friend/", views.send_friend_request),
     path("accept-friend-request/", actions.accept_friend_request),
+    path("change-password/",views.change_password_page),
     path("", views.chat)
 ]

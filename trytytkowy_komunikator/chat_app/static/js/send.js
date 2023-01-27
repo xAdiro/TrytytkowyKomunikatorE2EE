@@ -1,7 +1,12 @@
+$(function () {
+    $("#message-field")
+})
+
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
 
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
@@ -12,6 +17,8 @@ $.ajaxSetup({
 });
 
 function sendMessage(){
+    if(event.key !== 'Enter') return;
+
     if(converser === null){
         return;
     }
@@ -52,3 +59,4 @@ function getCookie(cname) {
   }
   return "";
 }
+

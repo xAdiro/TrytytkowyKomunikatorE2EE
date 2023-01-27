@@ -20,6 +20,7 @@
         <script src="{% static 'js/selectChat.js' %}"></script>
         <script src="{% static 'js/encryption.js' %}"></script>
         <script src="{% static 'js/refreshChat.js' %}"></script>
+        <script src="{% static 'js/deleteFriend.js' %}"></script>
     </head>
     <body>
         <div class="topbar">
@@ -43,15 +44,20 @@
                     <input id="add-contact-input" type="text" onkeydown="sendFriendRequest()">
                 </div>
                 <div class="contacts">
-                    {% for contact in contacts %}
+                    {% for contact in contacts %}  
+                    <div class="contact-container">    
                         <div onclick = "selectChat('{{ contact }}', this)" class="contact">
                             {{ contact }}
                         </div>
+                        <div>
+                        <button onclick="deleteFriend('{{ contact }}')" class="buttonrequest">X</button>
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
                 <div class="friend-request-container" id="friend-request-container">
                 Friend Requests
-            </div>
+                </div>
             </div>
             <div class = "chatcontainer">
                 <div class="chatbox" id="chatbox">

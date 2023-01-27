@@ -12,6 +12,7 @@ body{
     border-radius: 1em;
     text-align: center;
     text-decoration: none;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .buttonrequest{
@@ -22,6 +23,8 @@ body{
     border-radius: 1em;
     text-align: center;
     text-decoration: none;
+    height: 90%;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .topbar{
@@ -77,14 +80,22 @@ body{
     overflow: auto;
 }
 
+.contact-container{
+    display: flex;
+    flex-direction: row;
+    /* background-color: red; */
+}
+
 .contact{
     background-color: #397367;
-    height: 1.5em;
+    height: 90%;
     margin: 0.25em;
     border-radius: 1em;
     padding: 1em 1em;
     text-align: center;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
+
 
 a:link{
     text-decoration: none;
@@ -110,6 +121,7 @@ a:link{
     border-radius: 1em;
     padding: 1em 1em;
     text-align: center;
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 }
 
 .chatcontainer{

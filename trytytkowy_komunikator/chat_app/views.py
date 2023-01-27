@@ -12,18 +12,12 @@ def chat(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
 
-
-    
-
     #friend requests-------------------------
 
     user = User.objects.get(username=request.user.username)
     friend_requests = [User.objects.get(id=query_id["sender"])
                        for query_id in
                        models.FriendRequest.objects.only("sender").filter(receiver=user.id).values("sender")]
-
-
-    
 
     #contacts--------------------------------
 
@@ -34,61 +28,61 @@ def chat(request):
     contacts2 = [str(User.objects.get(id=query_id["user1"]))
                  for query_id in
                  models.FriendsWith.objects.filter(user2=user.id).values("user1")]
-    
 
     contacts1.extend(contacts2)
-
-    if len(contacts1) > 0:
-        converser_username = request.GET.get("converser", default=contacts1[0])
-    else:
-        converser_username = request.GET.get("converser", default="")
-
-    converser_user=User.objects.get(username=converser_username)
-#messages--------------------------------
-
-
-    messages = models.Message.objects.filter(
-        Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
-        ).order_by("timestamp")
-
-    messages_authors = [User.objects.get(id=query_id["author"])
-                 for query_id in
-                 messages.values("author")]
-    
-    messages_receivers = [User.objects.get(id=query_id["receiver"])
-                 for query_id in
-                 messages.values("receiver")]
-    
-    messages_timestamp = [query_id["timestamp"]
-                 for query_id in
-                 messages.values("timestamp")]
-
-    messages_content = [query_id["content"]
-                 for query_id in
-                 messages.values("content")]
-
-
-    conversation_name = []
-    is_author = []
-
-    for author, receiver in zip(messages_authors, messages_receivers):
-        if request.user.username == author:
-            is_author.append(True)
-            conversation_name.append(receiver)
-        
-        else:
-            is_author.append(False)
-            conversation_name.append(author)
-
-    messages_list = zip(conversation_name, is_author, messages_timestamp, messages_content)
-
 
     return render(request, "chat.html", {
         "friend_requests": friend_requests,
         "contacts": contacts1,
-        "messages": messages_list,
-        "converser": converser_username
     })
+
+
+def chatbox(request):
+    if request.method == "GET":
+        converser_username = request.GET["converser"]
+        converser_user = User.objects.get(username=converser_username)
+        user = User.objects.get(username=request.user)
+
+        # messages--------------------------------
+        messages = models.Message.objects.filter(
+            Q(receiver=user.id, author=converser_user.id) | Q(receiver=converser_user.id, author=user.id)
+        ).order_by("timestamp")
+
+        print(messages)
+        messages_authors = [User.objects.get(id=query_id["author"])
+                            for query_id in
+                            messages.values("author")]
+
+        messages_receivers = [User.objects.get(id=query_id["receiver"])
+                              for query_id in
+                              messages.values("receiver")]
+
+        messages_timestamp = [query_id["timestamp"]
+                              for query_id in
+                              messages.values("timestamp")]
+
+        messages_content = [query_id["content"]
+                            for query_id in
+                            messages.values("content")]
+
+        conversation_name = []
+        is_author = []
+
+        for author, receiver in zip(messages_authors, messages_receivers):
+            if request.user.username == author:
+                is_author.append(True)
+                conversation_name.append(receiver)
+
+            else:
+                is_author.append(False)
+                conversation_name.append(author)
+
+        messages_list = zip(conversation_name, is_author, messages_timestamp, messages_content)
+
+        return render(request, "chatbox_content.html", {
+            "messages": messages_list,
+            "converser": converser_username,
+        })
 
 
 def send_message(request):

@@ -7,8 +7,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="{% static 'js/send.js' %}"></script>
         <script src="{% static 'js/sendFriendRequest.js' %}"></script>
-         <script src="{% static 'js/acceptRequest.js' %}"></script>
-         <script src="{% static 'js/deleteRequest.js' %}"></script>
+        <script src="{% static 'js/acceptRequest.js' %}"></script>
+        <script src="{% static 'js/deleteRequest.js' %}"></script>
+        <script src="{% static 'js/selectChat.js' %}"></script>
     </head>
     <body>
         <div class="topbar">
@@ -29,9 +30,9 @@
                 </div>
                 <div class="contacts">
                     {% for contact in contacts %}
-                    <a href="/?converser={{ contact }}">    
-                    <div class="contact {% if converser == contact %}active_contact{% endif %}">{{ contact }}</div>
-                    </a>
+                        <div onclick = "selectChat('{{ contact }}', this)" class="contact">
+                            {{ contact }}
+                        </div>
                     {% endfor %}
                 </div>
                 <div class="friend-request-container">
@@ -46,15 +47,8 @@
             </div>
             </div>
             <div class = "chatcontainer">
-                <div class="chatbox">
-                    {% for conversation_name, isauthor, timestamp, content in messages %}
-                    {% if author %}
-                    <div class="message message-sent">
-                    {% else %}
-                    <div class="message message-received">
-                    {% endif %}
-                    {{timestamp}}: {{content}}</div>
-                    {% endfor %}
+                <div class="chatbox" id="chatbox">
+
 
 
                 </div>

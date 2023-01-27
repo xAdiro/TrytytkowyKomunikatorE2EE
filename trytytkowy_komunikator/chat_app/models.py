@@ -1,6 +1,5 @@
 from django.db.models import Model, CharField, DateField, DateTimeField, TextField, ForeignKey, CASCADE, SET_NULL
 from django.contrib.auth.models import User
-from django.forms import ModelForm
 
 
 class Key(Model):

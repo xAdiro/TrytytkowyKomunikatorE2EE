@@ -1,0 +1,9 @@
+{% for conversation_name, isauthor, timestamp, content in messages %}
+    {% if isauthor %}
+        <div class="message message-sent">
+    {% else %}
+        <div class="message message-received">
+    {% endif %}
+    {{timestamp}}: {{content}}
+        </div>
+{% endfor %}

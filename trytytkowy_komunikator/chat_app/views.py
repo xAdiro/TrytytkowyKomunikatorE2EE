@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.http import HttpResponse
 
 from . import models
 from . import forms
@@ -70,7 +71,7 @@ def chatbox(request):
 
 def send_message(request):
     if not request.user.is_authenticated or request.method != "POST":
-        return redirect("/")
+        return HttpResponse(content="", status=403)
 
     content = request.POST.get("message", default="")
     receiver_name = request.POST.get("receiver")
@@ -83,7 +84,7 @@ def send_message(request):
         content=content
     )
     message.save()
-    return redirect("/")
+    return HttpResponse(content="", status=201)
 
 
 def login_page(request):
@@ -123,19 +124,19 @@ def logout_action(request):
 
 def send_friend_request(request):
     if not request.user.is_authenticated or request.method != "POST":
-        return redirect("/")
+        return HttpResponse(content="", status=403)
 
     receiver_username = request.POST.get("username", default="")
     receiver_user = User.objects.get(username=receiver_username)
 
     if models.FriendRequest.objects.filter(sender=request.user,
                                            receiver=User.objects.get(username=receiver_username)).count() > 0:
-        return redirect("/")
+        HttpResponse(content="", status=403)
 
     if models.FriendRequest.objects.filter(sender=receiver_user, receiver=request.user).count() > 0:
         models.FriendRequest.objects.get(sender=receiver_user, receiver=request.user).delete()
         models.FriendsWith(user1=receiver_user, user2=request.user).save()
-        return redirect("/")
+        HttpResponse(content="", status=403)
 
     if not _is_friend_with(request.user.username, receiver_username) and request.user.username != receiver_username:
         friend_request = models.FriendRequest(
@@ -144,7 +145,7 @@ def send_friend_request(request):
         )
         friend_request.save()
 
-    return redirect("/")
+    return HttpResponse(content="", status=201)
 
 
 def update_pub_key(request):
@@ -220,7 +221,7 @@ def delete_friend(request):
         Q(user1=request.user, user2=User.objects.get(username=friend_username)) |
         Q(user2=request.user, user1=User.objects.get(username=friend_username))
     ).delete()
-    return redirect("/")
+    return HttpResponse(content="", status=201)
 
 
 def contacts(request):

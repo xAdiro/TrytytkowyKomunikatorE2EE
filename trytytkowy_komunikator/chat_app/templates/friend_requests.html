@@ -1,4 +1,6 @@
+{%if friend_requests%}
 Friend Requests
+{%endif%}
 {% for request in friend_requests %}
     <div class="friend-request">
         <div class="fiend-request-item">{{ request }}</div>

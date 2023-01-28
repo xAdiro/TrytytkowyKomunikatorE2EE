@@ -7,6 +7,7 @@ Niektóre części strony są ładowane asynchronicznie poprzez ciągłe zapytan
 
 Po zaakceptowaniu zaproszenia do znajomych trzeba odświeżyć stronę żeby nowa osoba pokazała się na liście, ale zaproszenia i czat wczytywane są samoczynnie.
 
+<img src="https://raw.githubusercontent.com/xAdiro/TrytytkowyKomunikatorE2EE/main/screenshot.png">
 
 ## Pomocne komendy
 1. Zainstaluj docker i docker-compose

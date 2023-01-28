@@ -90,6 +90,7 @@ body{
     flex-grow: 7;
     box-sizing: border-box;
     border: 1px solid black;
+    overflow: auto;
 }
 
 .contact-container{
@@ -111,9 +112,8 @@ body{
     display: flex;
     flex-direction: column;
     gap: 0.3em;
-    max-height: 400px;
     padding: 0.3em 0.3em;
-    overflow: auto;
+
 }
 
 .contact{
@@ -141,10 +141,16 @@ a:link{
     background-color: #5DA399;
 }
 
+.friends-title{
+    color:white;
+    text-align: center;
+}
+
 .friend-request-container{
     background-color: #35393C;
     color:rgb(255, 255, 255);
     text-align: center;
+    overflow: auto;
 }
 
 .friend-request{

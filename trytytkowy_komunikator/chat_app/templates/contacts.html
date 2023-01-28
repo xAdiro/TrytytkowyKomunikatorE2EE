@@ -1,4 +1,6 @@
-<div class="friend-request-container">Friends</div>
+{%if contacts%}
+<div class="friends-title">Friends</div>
+{%endif%}
 {% for contact in contacts %}
     <div class="contact-container">
         <div onclick = "selectChat('{{ contact }}', this)" class="contact">

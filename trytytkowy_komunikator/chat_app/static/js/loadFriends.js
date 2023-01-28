@@ -4,7 +4,7 @@ $(() =>{
     friends = document.getElementsByClassName("contact-container").length;
 })
 function loadFriends(){
-    console.log("loading friends");
+    // console.log("loading friends");
     $("#contacts").load("contacts/");
 
     let currentFriends = document.getElementsByClassName("contact-container").length;

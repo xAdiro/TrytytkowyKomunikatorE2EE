@@ -14,7 +14,7 @@ function refreshChat(){
             })
             converserPubKey = $("#converser-pub-key").text()
     });
-    console.log("chat refreshed");
+    // console.log("chat refreshed");
 }
 
 function refreshFriendRequests(){

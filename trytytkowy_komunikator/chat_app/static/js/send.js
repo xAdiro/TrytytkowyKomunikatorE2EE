@@ -26,7 +26,7 @@ function sendMessage(){
 
     //send for receiver
     let mess = encryptForSomeone(messageField.val(), converserPubKey);
-    console.log(mess);
+    // console.log(mess);
     $.post("/send-message/", {
         "receiver": converser,
         "message": mess,

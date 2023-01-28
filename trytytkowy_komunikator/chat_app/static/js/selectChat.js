@@ -7,7 +7,7 @@ function selectChat(username, element){
             element.classList.add("active_contact");
             converser = username;
             converserPubKey = $("#converser-pub-key").text()
-            console.log("selected " + username);
+            // console.log("selected " + username);
 
             const elements = document.querySelectorAll(".message-content");
             Array.from(elements).forEach((e, i) => {

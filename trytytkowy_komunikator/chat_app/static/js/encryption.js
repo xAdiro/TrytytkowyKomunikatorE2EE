@@ -18,7 +18,7 @@ function encryptForMe(text) {
 
 function encryptForSomeone(text, RSAString){
     let mess = cryptico.encrypt(text, RSAString);
-    console.log("sending" + mess["cipher"]);
+    // console.log("sending" + mess["cipher"]);
     return mess["cipher"];
 }
 

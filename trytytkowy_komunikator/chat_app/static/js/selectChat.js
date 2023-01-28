@@ -12,6 +12,8 @@ function selectChat(username, element){
             const elements = document.querySelectorAll(".message-content");
             Array.from(elements).forEach((e, i) => {
                 e.innerHTML = cryptico.decrypt(e.innerHTML, currentKey)["plaintext"];
-            })
+            });
+
+            $("#chatbox").addClass("active-chatbox");
     });
 }

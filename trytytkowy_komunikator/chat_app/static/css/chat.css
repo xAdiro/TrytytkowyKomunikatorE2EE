@@ -177,7 +177,8 @@ a:link{
 }
 
 .chatbox{
-    background-color: #42858C;
+    background-color: #272f2f;
+    /*background-color: #42858C;*/
     display: flex;
     flex-direction: column-reverse;
     gap: 1em;
@@ -187,6 +188,10 @@ a:link{
     overflow: auto;
 }
 
+.active-chatbox{
+    background-color: #42858C;
+}
+
 .message{
     padding: 0.5em;
     min-height: 2em;
@@ -194,6 +199,7 @@ a:link{
     width: 50%;
     align-self: flex-end;
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
+    word-break: break-word;
 }
 
 .message-received{

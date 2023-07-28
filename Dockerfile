@@ -8,6 +8,6 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements.txt /app/requirements.txt
 RUN ["pip", "install", "-r", "requirements.txt"]
 RUN ["apt-get", "update"]
-RUN ["apt-get", "install", "-y", "netcat"]
+RUN ["apt-get", "install", "-y", "netcat-traditional"]
 
 COPY . /app
